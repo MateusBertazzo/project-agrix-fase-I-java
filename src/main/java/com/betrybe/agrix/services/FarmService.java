@@ -4,6 +4,7 @@ import com.betrybe.agrix.exceptions.FarmNotFoundException;
 import com.betrybe.agrix.models.entities.Farm;
 import com.betrybe.agrix.models.repositories.FarmRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +29,17 @@ public class FarmService {
     return farmRepository.findAll();
   }
 
+
+  /**
+   * Get farm by id.
+   */
   public Farm getFarmById(Long id) {
-    return farmRepository.findById(id)
-        .orElseThrow(() -> new FarmNotFoundException("Fazenda não encontrada!"));
+    // return farmRepository.findById(id)
+    //     .orElseThrow(() -> new FarmNotFoundException("Fazenda não encontrada!"));
+    Optional<Farm> farm = farmRepository.findById(id);
+    if (farm.isEmpty()) {
+      throw new FarmNotFoundException();
+    }
+    return farm.get();
   }
 }
