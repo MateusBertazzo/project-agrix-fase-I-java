@@ -38,4 +38,10 @@ public class FarmController {
   public List<Farm> getAllFarm() {
     return farmService.getAllFarm();
   }
+
+  @GetMapping("/{id}")
+  @ResponseStatus(HttpStatus.OK)
+  public Farm getFarmById(Long id) {
+    return farmService.getFarmById(id);
+  }
 }
