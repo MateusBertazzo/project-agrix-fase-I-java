@@ -1,6 +1,9 @@
 package com.betrybe.agrix.controllers;
 
+import com.betrybe.agrix.dto.FarmDto;
+import com.betrybe.agrix.models.entities.Crop;
 import com.betrybe.agrix.models.entities.Farm;
+// import com.betrybe.agrix.services.CropService;
 import com.betrybe.agrix.services.FarmService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,28 +25,56 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/farms")
 public class FarmController {
   private final FarmService farmService;
+  // private final CropService cropService;
 
   @Autowired
   public FarmController(FarmService farmService) {
     this.farmService = farmService;
+    // this.cropService = cropService;
   }
 
+  /**
+   * Create a farm.
+   */
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Farm createFarm(@RequestBody Farm farm) {
-    return farmService.createFarm(farm);
+  public FarmDto createFarm(@RequestBody FarmDto farmDto) {
+    Farm farm = farmService.createFarm(farmDto.toFarm());
+
+    FarmDto farmDtoResponse = new FarmDto(farm.getId(), farm.getName(), farm.getSize());
+
+    return farmDtoResponse;
   }
 
+  /**
+   * Get all farms.
+   */
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
-  public List<Farm> getAllFarm() {
-    return farmService.getAllFarm();
+  public List<FarmDto> getAllFarm() {
+    List<Farm> farms = farmService.getAllFarm();
+    List<FarmDto> farmsDto = farms.stream()
+        .map(farm -> new FarmDto(farm.getId(), farm.getName(), farm.getSize())).toList();
+
+    return farmsDto;
   }
 
+  /**
+   * Get farm by id.
+   */
   @GetMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public Farm getFarmById(@PathVariable Long id) {
-    Farm farm =  farmService.getFarmById(id);
-    return farm;
+  public FarmDto getFarmById(@PathVariable Long id) {
+    Farm farm = farmService.getFarmById(id);
+    FarmDto farmDto = new FarmDto(farm.getId(), farm.getName(), farm.getSize());
+
+    return farmDto;
   }
+
+
+  // @PostMapping("/{farmId}/crops")
+  // @ResponseStatus(HttpStatus.CREATED)
+  // public Crop createCrop(@PathVariable Long farmId, @RequestBody Crop crop) {
+  //   return cropService.createCrop(crop, farmId);    
+  // }
 }

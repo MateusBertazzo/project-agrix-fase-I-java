@@ -1,5 +1,6 @@
 package com.betrybe.agrix.services;
 
+import com.betrybe.agrix.dto.FarmDto;
 import com.betrybe.agrix.exceptions.FarmNotFoundException;
 import com.betrybe.agrix.models.entities.Farm;
 import com.betrybe.agrix.models.repositories.FarmRepository;
@@ -24,7 +25,7 @@ public class FarmService {
   public Farm createFarm(Farm farm) {
     return farmRepository.save(farm);
   }
-
+  
   public List<Farm> getAllFarm() {
     return farmRepository.findAll();
   }

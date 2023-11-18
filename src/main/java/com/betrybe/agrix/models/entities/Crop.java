@@ -1,8 +1,7 @@
 package com.betrybe.agrix.models.entities;
 
 
-import org.hibernate.annotations.ManyToAny;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +12,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+
+/**
+ * Crop entity.
+ */
 @Data
 @Entity
 @Table(name = "crops")
@@ -33,6 +36,9 @@ public class Crop {
   public Crop() {
   }
 
+  /**
+  * Crop constructor.
+  */
   public Crop(Long id, String name, Farm farm, Double plantedArea) {
     this.id = id;
     this.name = name;
