@@ -1,5 +1,6 @@
 package com.betrybe.agrix.controllers;
 
+import com.betrybe.agrix.dto.CropDto;
 import com.betrybe.agrix.dto.FarmDto;
 import com.betrybe.agrix.models.entities.Crop;
 import com.betrybe.agrix.models.entities.Farm;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
-
 
 /**
  * Farm controller.
@@ -72,9 +71,17 @@ public class FarmController {
   }
 
 
-  // @PostMapping("/{farmId}/crops")
-  // @ResponseStatus(HttpStatus.CREATED)
-  // public Crop createCrop(@PathVariable Long farmId, @RequestBody Crop crop) {
-  //   return cropService.createCrop(crop, farmId);    
-  // }
+  /**
+   * Create a crop.
+   */
+  @PostMapping("/{farmId}/crops")
+  @ResponseStatus(HttpStatus.CREATED)
+  public CropDto createCrop(@PathVariable Long farmId, @RequestBody CropDto cropDto) {
+    Crop crop = farmService.createCrop(farmId, cropDto.toCrop());
+
+    CropDto cropDtoResponse = 
+        new CropDto(crop.getId(), crop.getName(), farmId, crop.getPlantedArea());
+
+    return cropDtoResponse;
+  }
 }
