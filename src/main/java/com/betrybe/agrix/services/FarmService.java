@@ -68,4 +68,12 @@ public class FarmService {
   private void updateFarm(Farm farm) {
     farmRepository.save(farm);
   }
+
+  /**
+   * Get all crops from a farm.
+   */
+  public List<Crop> getAllCropsFromFarm(Long farmId) {
+    Farm farm = getFarmById(farmId);
+    return farm.getCrops();
+  }  
 }

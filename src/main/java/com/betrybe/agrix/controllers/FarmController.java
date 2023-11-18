@@ -84,4 +84,18 @@ public class FarmController {
 
     return cropDtoResponse;
   }
+
+  /**
+   * Get all crops from a farm.
+   */
+  @GetMapping("/{farmId}/crops")
+  @ResponseStatus(HttpStatus.OK)
+  public List<CropDto> getAllCropsFromFarm(@PathVariable Long farmId) {
+    List<Crop> crops = farmService.getAllCropsFromFarm(farmId);
+    List<CropDto> cropsDto = crops.stream()
+        .map(crop -> new CropDto(crop.getId(), crop.getName(), farmId, crop.getPlantedArea()))
+        .toList();
+
+    return cropsDto;
+  }
 }
