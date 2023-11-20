@@ -38,13 +38,13 @@ public class FarmService {
    * Get farm by id.
    */
   public Farm getFarmById(Long id) {
-    // return farmRepository.findById(id)
-    //     .orElseThrow(() -> new FarmNotFoundException("Fazenda não encontrada!"));
-    Optional<Farm> farm = farmRepository.findById(id);
-    if (farm.isEmpty()) {
-      throw new FarmNotFoundException();
-    }
-    return farm.get();
+    return farmRepository.findById(id)
+        .orElseThrow(() -> new FarmNotFoundException());
+    // Optional<Farm> farm = farmRepository.findById(id);
+    // if (farm.isEmpty()) {
+    //   throw new FarmNotFoundException();
+    // }
+    // return farm.get();
   }
 
   /**
